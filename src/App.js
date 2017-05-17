@@ -26,10 +26,15 @@ class FetchApis extends React.Component {
   }
 
   componentDidMount(){
+
+    let urlMarvel = 'http://gateway.marvel.com/v1/public/comics?ts=3&limit=10&'
+    urlMarvel += 'format=comic&formatType=comic&dateRange=2015-01-01%2C2016-12-31&'
+    urlMarvel += 'apikey=63a61d967b90274f87b31030ede8998e&hash=ca354e0cad1e08c91de7faa06cbbed81'
+
     axios.all([
       axios.get('https://www.reddit.com/r/redditdev/top.json?limit=2'),
       axios.get('https://api.github.com/search/repositories?q=react+language:javascript&sort=stars&order=desc'),
-      axios.get('http://gateway.marvel.com/v1/public/comics?ts=3&limit=10&format=comic&formatType=comic&dateRange=2015-01-01%2C2016-12-31&apikey=63a61d967b90274f87b31030ede8998e&hash=ca354e0cad1e08c91de7faa06cbbed81')
+      axios.get(urlMarvel)
     ])
       .then(axios.spread((reddit, github, marvel) => {
         const feedreddit = reddit.data.data.children.map(objReddit => objReddit.data);
