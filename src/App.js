@@ -21,7 +21,8 @@ class FetchApis extends React.Component {
     this.state ={
       feedReddit: [],
       feedGitHub: [],
-      feedMarvel: []
+      feedMarvel: [],
+      showLoading: true,
     }
   }
 
@@ -50,15 +51,17 @@ class FetchApis extends React.Component {
         this.setState({
           feedReddit: feedreddit,
           feedGitHub: feedgithub,
-          feedMarvel: feedmarvel
+          feedMarvel: feedmarvel,
+          showLoading: false,
         })
-
       }));
   }
 
   render(){
+    const loading =  this.state.showLoading ? <Loading /> : '';
     return(
       <div>
+        {loading}
         <h1>Feeds</h1>
         <ul>
           {this.state.feedReddit.map(obj =>
@@ -75,6 +78,8 @@ class FetchApis extends React.Component {
     )
   }
 }
+
+const Loading = (props) => <div>Carregando</div>
 
 class SitesFeeds extends React.Component{
 
