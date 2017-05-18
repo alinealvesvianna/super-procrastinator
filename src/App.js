@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
 class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="app-container">
+        <section className="container-sites">
+        </section>
         <section className="container-feeds">
           <FetchApis />
         </section>
@@ -77,11 +78,12 @@ class FetchApis extends React.Component {
 
   render(){
     const loading =  this.state.showLoading ? <Loading /> : '';
-    const requestFail = this.state.error ? this.showError():'';
+    const requestFail = this.state.error;
+
     return(
       <div>
-        {requestFail}
         {loading}
+        {requestFail ? this.showError() : ''}
         <h1>Feeds</h1>
         <ul>
           {this.state.feedReddit.map(obj =>
@@ -100,6 +102,8 @@ class FetchApis extends React.Component {
 }
 
 const Loading = (props) => <div>Carregando</div>
+
+
 
 class SitesFeeds extends React.Component{
 
