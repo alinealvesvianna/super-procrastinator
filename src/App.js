@@ -23,6 +23,7 @@ class FetchApis extends React.Component {
       feedGitHub: [],
       feedMarvel: [],
       showLoading: true,
+      error: null
     }
   }
 
@@ -53,14 +54,33 @@ class FetchApis extends React.Component {
           feedGitHub: feedgithub,
           feedMarvel: feedmarvel,
           showLoading: false,
+          error: null
         })
-      }));
+
+      }))
+      .catch(err => {
+        this.setState({
+          showLoading: false,
+          error: err
+        })
+        console.log(err)
+      });
+  }
+
+  showError(){
+    return (
+      <div>
+        Ops...Alguma coisa de errado aconteceu: {this.state.error.message}
+      </div>
+    )
   }
 
   render(){
     const loading =  this.state.showLoading ? <Loading /> : '';
+    const requestFail = this.state.error ? this.showError():'';
     return(
       <div>
+        {requestFail}
         {loading}
         <h1>Feeds</h1>
         <ul>
