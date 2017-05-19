@@ -63,6 +63,12 @@ body {
   display: inline-block;
   cursor: pointer;
 }
+.filter{
+  display: inline-block;
+  font-size: 1.6em;
+  color:#2f6761;
+  margin-right: 0.5em;
+}
 
 .siteFeedsItem__link {
   color: #ebf5f4;

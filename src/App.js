@@ -163,6 +163,7 @@ class FetchApis extends React.Component {
             Procrastinator APP
           </h1>
           <ul className="listSitesFeeds">
+            <li className="filter">Filtrar Por: </li>
             <SitesFeeds feedName={'Reddit'} onClick={this.filter.bind(this)} />
             <SitesFeeds feedName={'GitHub'} onClick={this.filter.bind(this)} />
             <SitesFeeds feedName={'Marvel'} onClick={this.filter.bind(this)} />
