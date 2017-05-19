@@ -28,7 +28,7 @@ class FetchApis extends React.Component {
     this.getApi({
       urlReddit: 'https://www.reddit.com/r/redditdev/top.json?limit=10',
       urlGithub: 'https://api.github.com/search/repositories?q=react+language:javascript&sort=stars&order=desc',
-      urlMarvel: 'http://gateway.marvel.com/v1/public/comics?ts=3&limit=10&format=comic&formatType=comic&dateRange=2015-01-01%2C2016-12-31&apikey=63a61d967b90274f87b31030ede8998e&hash=ca354e0cad1e08c91de7faa06cbbed81'
+      urlMarvel: 'https://gateway.marvel.com/v1/public/comics?ts=3&limit=10&format=comic&formatType=comic&dateRange=2015-01-01%2C2016-12-31&apikey=63a61d967b90274f87b31030ede8998e&hash=ca354e0cad1e08c91de7faa06cbbed81'
     })
   }
 
