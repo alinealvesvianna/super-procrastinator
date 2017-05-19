@@ -4,11 +4,8 @@ import axios from 'axios'
 class App extends React.Component {
   render () {
     return (
-      <div className='app-container'>
-        <section className='container-sites' />
-        <section className='container-feeds'>
-          <FetchApis />
-        </section>
+      <div className='container'>
+        <FetchApis />
       </div>
     )
   }
@@ -23,13 +20,13 @@ class FetchApis extends React.Component {
       feedReddit: [],
       feedGitHub: [],
       feedMarvel: [],
-      showLoading: true
+      showLoading: true,
     }
   }
 
   componentDidMount () {
     this.getApi({
-      urlReddit: 'https://www.reddit.com/r/redditdev/top.json?limit=2',
+      urlReddit: 'https://www.reddit.com/r/redditdev/top.json?limit=10',
       urlGithub: 'https://api.github.com/search/repositories?q=react+language:javascript&sort=stars&order=desc',
       urlMarvel: 'http://gateway.marvel.com/v1/public/comics?ts=3&limit=10&format=comic&formatType=comic&dateRange=2015-01-01%2C2016-12-31&apikey=63a61d967b90274f87b31030ede8998e&hash=ca354e0cad1e08c91de7faa06cbbed81'
     })
@@ -72,15 +69,20 @@ class FetchApis extends React.Component {
 
   showError () {
     return (
-      <div>
-        Ops...Alguma coisa de errado aconteceu: {this.state.error.message}
+      <div className="error">
+        <p className="error__txt">
+          <span className="icon-thumbs-down error__icon"></span>
+          Ops...Alguma coisa deu errado: {this.state.error.message}
+        </p>
       </div>
     )
   }
 
   filter (flagSwitch) {
     this.setState(prevState => {
-      return { flag: prevState.flag === flagSwitch ? '' : flagSwitch }
+      return {
+        flag: prevState.flag === flagSwitch ? '' : flagSwitch ,
+      }
     })
   }
 
@@ -90,60 +92,118 @@ class FetchApis extends React.Component {
 
     const redditFeeds = !this.state.flag || this.state.flag === 'Reddit'
       ? this.state.feedReddit.map(obj => (
-        <li key={obj.id}>
-          {obj.title}
-          <strong> -Reedit </strong>
+        <li className="feedsItem" key={obj.id}>
+          <a className="feedsItem__link" href={obj.url}>
+            {obj.title}
+            <div className="feedsItem__infos">
+              <span className="info">
+                <strong>Score: </strong>
+                {obj.score}
+              </span>
+              <span className="info">
+                <strong>Comentários: </strong>
+                {obj.num_comments}
+              </span>
+              <span className="info--light"> Reedit </span>
+            </div>
+          </a>
         </li>
         ))
       : []
 
     const githubFeeds = !this.state.flag || this.state.flag === 'GitHub'
       ? this.state.feedGitHub.map(obj => (
-        <li key={obj.id}>
-          {obj.name}
-          <strong> -GitHub</strong>
+        <li className="feedsItem" key={obj.id}>
+        <a className="feedsItem__link" href={obj.url}>
+            {obj.full_name}
+            <div className="feedsItem__infos">
+              <span className="info">
+                <strong>Forks: </strong>
+                {obj.forks}
+              </span>
+              <span className="info">
+                <strong>Issues: </strong>
+                {obj.open_issues}
+              </span>
+              <span className="info--light"> Github Treding</span>
+            </div>
+        </a>
         </li>
         ))
       : []
 
     const marvelFeeds = !this.state.flag || this.state.flag === 'Marvel'
       ? this.state.feedMarvel.map(obj => (
-        <li key={obj.id}>
-          {obj.title}
-          <strong> -Marvel</strong>
+        <li className="feedsItem" key={obj.id}>
+          <a className="feedsItem__link" href={obj.urls[0].url}>
+            {obj.title}
+            <div className="feedsItem__infos">
+              <span className="info">
+                <strong>Criador: </strong>
+                {obj.creators.items[0].name}
+              </span>
+              <span className="info">
+                <strong>Serie: </strong>
+                {obj.series.name}
+              </span>
+              <span className="info--light"> Marvel</span>
+            </div>
+          </a>
         </li>
         ))
       : []
 
     return (
-      <div>
-        <div>
-          <SitesFeeds feedName={'Reddit'} onClick={this.filter.bind(this)} />
-          <SitesFeeds feedName={'GitHub'} onClick={this.filter.bind(this)} />
-          <SitesFeeds feedName={'Marvel'} onClick={this.filter.bind(this)} />
+      <div className="content">
+      {loading}
+      <header className="header">
+        <div className="header__container">
+          <h1 className="header__title">
+            <span className="icon-brand header__icon"></span>
+            Procrastinator APP
+          </h1>
+          <ul className="listSitesFeeds">
+            <SitesFeeds feedName={'Reddit'} onClick={this.filter.bind(this)} />
+            <SitesFeeds feedName={'GitHub'} onClick={this.filter.bind(this)} />
+            <SitesFeeds feedName={'Marvel'} onClick={this.filter.bind(this)} />
+          </ul>
         </div>
+      </header>
 
-        {loading}
+
+
         {requestFail ? this.showError() : ''}
-        <h1>Feeds</h1>
-        <ul>
-          {redditFeeds}
-          {githubFeeds}
-          {marvelFeeds}
-        </ul>
+        <section className="feeds__container">
+          <h2 className="categoryTitle">
+            {this.state.flag === '' ? 'Todos os Feeds' : this.state.flag}
+          </h2>
+          <ul className="listFeeds">
+            {redditFeeds}
+            {githubFeeds}
+            {marvelFeeds}
+          </ul>
+        </section>
       </div>
     )
   }
 }
 
-const Loading = props => <div>Carregando</div>
+const Loading = props => <div className="loading">
+  <p className="loading__txt">
+    <span className="loading__animation"></span>
+    <span className="icon-thumbs-up loading__icon"></span>
+    Estamos buscando as melhoraes novidades para você!
+  </p>
+</div>
 
 class SitesFeeds extends React.Component {
   render () {
     return (
-      <p onClick={() => this.props.onClick(this.props.feedName)} ref='input'>
-        {this.props.feedName}
-      </p>
+      <li className="siteFeedsItem">
+        <a className="siteFeedsItem__link" onClick={() => this.props.onClick(this.props.feedName)}>
+          {this.props.feedName}
+        </a>
+      </li>
     )
   }
 }
