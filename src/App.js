@@ -193,7 +193,7 @@ const Loading = props => <div className="loading">
   <p className="loading__txt">
     <span className="loading__animation"></span>
     <span className="icon-thumbs-up loading__icon"></span>
-    Estamos buscando as melhoraes novidades para você!
+    Estamos buscando as melhores novidades para você!
   </p>
 </div>
 

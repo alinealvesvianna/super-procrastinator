@@ -151,7 +151,7 @@ ul, li, p, a, span, div, label, button, nav, h1, h2, h3, h4, h5, h6 {
 
 .loading__txt,
 .error__txt {
-  font-size: 3em;
+  font-size: 2em;
   text-align: center;
   color: #d47207;
   position: relative;
@@ -162,7 +162,7 @@ ul, li, p, a, span, div, label, button, nav, h1, h2, h3, h4, h5, h6 {
 .error__icon {
   display: inline-block;
   margin-right: 0.5em;
-  font-size:2em;
+  font-size:1em;
 }
 
 .error__icon {
